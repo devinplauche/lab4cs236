@@ -132,7 +132,6 @@ Relation Interpreter::evaluateRule(Rule inputRule) {
     size_t qSize = inputRule.rightPredicates.size();
 
     for(size_t i = 0; i < (qSize); i++) { //FIXME
-
         Predicate localPredicate = inputRule.rightPredicates.at(i);
         Relation orderObj = evaluateQuery(localPredicate);
         relationObj = relationObj.naturalJoin(orderObj); // joins each right predicate

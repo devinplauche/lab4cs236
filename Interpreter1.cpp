@@ -159,7 +159,7 @@ Relation Interpreter::evaluateRule(Rule inputRule) {
                 if (lName.at(j) == rName.at(k).paramValue && lName.at(j) == inputRule.leftPredicate.at(0).paramVector.at(i).paramValue) {
 
                     posOfLeftCols.push_back(j);
-                    //cout << lName.at(j);
+                    //cout << lName.at(j) << endl;
 
 
 

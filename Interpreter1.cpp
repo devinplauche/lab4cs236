@@ -135,7 +135,6 @@ Relation Interpreter::evaluateRule(Rule inputRule) {
 
         Predicate localPredicate = inputRule.rightPredicates.at(i);
         Relation orderObj = evaluateQuery(localPredicate);
-
         relationObj = relationObj.naturalJoin(orderObj); // joins each right predicate
 
        if( i == (inputRule.rightPredicates.size() - 1)) { // only call on last iteration

@@ -96,14 +96,16 @@ void Interpreter::evaluateRules() {
     bool trueOnce = false;
     size_t rvSize = rootData.rulesVector.size();
     while(newTuple) {
-        newTuple = false;
+
         trueOnce = false;
         for(size_t i = 0; i < rvSize; i++) {
             cout << rootData.rulesVector.at(i).toString() << endl;
             Relation relationObj;
             relationObj = evaluateRule(rootData.rulesVector.at(i));
+
             newTuple = relationObj.addedTuple;
             //cout << "newTuple:" << newTuple;
+
             if(newTuple) {
                 trueOnce = true; //keeps true if one is true
             }
@@ -135,6 +137,7 @@ Relation Interpreter::evaluateRule(Rule inputRule) {
 
         Predicate localPredicate = inputRule.rightPredicates.at(i);
         Relation orderObj = evaluateQuery(localPredicate);
+
         relationObj = relationObj.naturalJoin(orderObj); // joins each right predicate
 
        if( i == (inputRule.rightPredicates.size() - 1)) { // only call on last iteration
@@ -170,10 +173,12 @@ Relation Interpreter::evaluateRule(Rule inputRule) {
     // rename and unite
     size_t drSize = databaseObj.databaseRelations.size();
     for(size_t j = 0; j < drSize; j++) {
+
         if(inputRule.leftPredicate.at(0).predicateName == databaseObj.databaseRelations.at(j).relationName) {
             relationObj = relationObj.renameScheme(databaseObj.databaseRelations.at(j).relationScheme.attributes);
             databaseObj.databaseRelations.at(j) = databaseObj.databaseRelations.at(j).Unite(relationObj); // Unite
             relationObj.addedTuple = databaseObj.databaseRelations.at(j).addedTuple;
+
         }
     }
 

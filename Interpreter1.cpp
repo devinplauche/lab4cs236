@@ -100,11 +100,12 @@ void Interpreter::evaluateRules() {
         trueOnce = false;
         for(size_t i = 0; i < rvSize; i++) {
             cout << rootData.rulesVector.at(i).toString() << endl;
-
-            newTuple = evaluateRule(rootData.rulesVector.at(i)).addedTuple;
+            Relation relationObj;
+            relationObj = evaluateRule(rootData.rulesVector.at(i));
+            newTuple = relationObj.addedTuple;
             //cout << "newTuple:" << newTuple;
             if(newTuple) {
-                trueOnce = newTuple; //keeps true if one is true
+                trueOnce = true; //keeps true if one is true
             }
 
         }
@@ -132,7 +133,9 @@ Relation Interpreter::evaluateRule(Rule inputRule) {
 
     for(size_t i = 0; i < (qSize); i++) { //FIXME
 
-        relationObj = relationObj.naturalJoin(evaluateQuery(inputRule.rightPredicates.at(i))); // joins each right predicate
+        Predicate localPredicate = inputRule.rightPredicates.at(i);
+        Relation orderObj = evaluateQuery(localPredicate);
+        relationObj = relationObj.naturalJoin(orderObj); // joins each right predicate
 
        if( i == (inputRule.rightPredicates.size() - 1)) { // only call on last iteration
            lSize = relationObj.relationScheme.attributes.size();
